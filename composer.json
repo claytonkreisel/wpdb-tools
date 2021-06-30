@@ -1,0 +1,24 @@
+{
+    "name": "claytonkreisel/wpdb-tools",
+    "type": "library",
+    "description": "This package provides tools to be used in custom WordPress themes or plugins that aid you in using the WPDB especially in the creation of custom tables",
+    "keywords": ["plugin","theme","database","wordpress","custom tables"],
+    "homepage": "https://github.com/claytonkreisel/wpdb-tools",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Clayton Kreisel",
+            "email": "hey@claytonkreisel.com",
+            "homepage": "https://claytonkreisel.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+        	"WPDBTools\\": "src/WPDBTools"
+       	}
+    }
+}
