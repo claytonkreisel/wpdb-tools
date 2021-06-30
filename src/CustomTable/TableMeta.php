@@ -7,7 +7,6 @@
 
     namespace WPDBTools\CustomTable;
 
-    use WPDBTools\CustomTable\Database;
     use WPDBTools\CustomTable\Table;
 
     class TableMeta extends Table {

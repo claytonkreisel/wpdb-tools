@@ -6,8 +6,6 @@
 
     namespace WPDBTools\CustomTable;
 
-    use WPDBTools\CustomTable\Database;
-
     class Table {
 
         //Initialize the table
