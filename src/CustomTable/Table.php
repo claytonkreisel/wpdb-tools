@@ -34,17 +34,17 @@
 
         //Return table columns
         private static function columns(){
-            throw new Exception('No table columns established in the table object. Create a private static function named "columns()" that returns an array of columns and there properties')
+            throw new Exception('No table columns established in the table object. Create a private static function named "columns()" that returns an array of columns and there properties');
         }
 
         //Return the table key
         private static function primary_key(){
-            throw new Exception('No primary key established in the table object. Create a private static function named "primary_key()" that returns the id of the column to use for the key')
+            throw new Exception('No primary key established in the table object. Create a private static function named "primary_key()" that returns the id of the column to use for the key');
         }
 
         //Return the table version for the database update
         private static function version(){
-            throw new Exception('No table version established in the table object. Create a private static function named "version()" that returns the table version number')
+            throw new Exception('No table version established in the table object. Create a private static function named "version()" that returns the table version number');
         }
 
         //Update the Main Table and Main Meta Table
