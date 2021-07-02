@@ -78,7 +78,7 @@ To create a ``Table`` you will put the following code in your ``functions.php`` 
 		public function columns(){
 			return [
 				'id' => 'bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT',
-				'int_column' => 'int(11) UNSIGNED NOT NULL DEFAULT 0',
+        'int_column' => 'int(11) UNSIGNED NOT NULL DEFAULT 0',
         'varchar_column' => 'varchar(15) NOT NULL',
         'varchar_column_2' => 'varchar(30) NOT NULL DEFAULT "Default Stuff"',
         'boolean_column' => 'boolean NOT NULL DEFAULT 0',
