@@ -9,6 +9,6 @@
 
     use WPDBTools\CustomTable\Table;
 
-    class TableMeta extends Table {
+    abstract class TableMeta extends Table {
 
     }
