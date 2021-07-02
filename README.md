@@ -79,13 +79,13 @@ To create a ``Table`` you will put the following code in your ``functions.php`` 
 		public function columns(){
 			return [
 				'id' => 'bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT',
-				        'int_column' => 'int(11) UNSIGNED NOT NULL DEFAULT 0',
-				        'varchar_column' => 'varchar(15) NOT NULL',
-				        'varchar_column_2' => 'varchar(30) NOT NULL DEFAULT "Default Stuff"',
-				        'boolean_column' => 'boolean NOT NULL DEFAULT 0',
-				        'text_column' => 'text NOT NULL',
-				        'longtext_column' => 'longtext NOT NULL',
-				        'datetime_column' => 'datetime NOT NULL DEFAULT "2000-01-01 12:00:00"'
+				    'int_column' => 'int(11) UNSIGNED NOT NULL DEFAULT 0',
+				    'varchar_column' => 'varchar(15) NOT NULL',
+		        'varchar_column_2' => 'varchar(30) NOT NULL DEFAULT "Default Stuff"',
+		        'boolean_column' => 'boolean NOT NULL DEFAULT 0',
+		        'text_column' => 'text NOT NULL',
+		        'longtext_column' => 'longtext NOT NULL',
+		        'datetime_column' => 'datetime NOT NULL DEFAULT "2000-01-01 12:00:00"'
 			]
 		}
 
