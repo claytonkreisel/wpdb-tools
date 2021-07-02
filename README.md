@@ -79,12 +79,12 @@ To create a ``Table`` you will put the following code in your ``functions.php`` 
 			return [
 				'id' => 'bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT',
 				'int_column' => 'int(11) UNSIGNED NOT NULL DEFAULT 0',
-	            'varchar_column' => 'varchar(15) NOT NULL',
-	            'varchar_column_2' => 'varchar(30) NOT NULL DEFAULT "Default Stuff"',
-	            'boolean_column' => 'boolean NOT NULL DEFAULT 0',
-	            'text_column' => 'text NOT NULL',
-	            'longtext_column' => 'longtext NOT NULL',
-	            'datetime_column' => 'datetime NOT NULL DEFAULT "2000-01-01 12:00:00"'
+        'varchar_column' => 'varchar(15) NOT NULL',
+        'varchar_column_2' => 'varchar(30) NOT NULL DEFAULT "Default Stuff"',
+        'boolean_column' => 'boolean NOT NULL DEFAULT 0',
+        'text_column' => 'text NOT NULL',
+        'longtext_column' => 'longtext NOT NULL',
+        'datetime_column' => 'datetime NOT NULL DEFAULT "2000-01-01 12:00:00"'
 			]
 		}
 
@@ -129,11 +129,11 @@ In order to insert a new row into a custom table you simply call the ```insert``
 	*/
 	$your_new_table->insert([
 		'int_column' => 30,
-        'varchar_column' => 'Short Value',
-        'boolean_column' => true,
-        'text_column' => '',
-        'longtext_column' => 'This is a considerable amount of text that will go into the database',
-        'datetime_column' => '2021-07-01 10:30:00'
+    'varchar_column' => 'Short Value',
+    'boolean_column' => true,
+    'text_column' => '',
+    'longtext_column' => 'This is a considerable amount of text that will go into the database',
+    'datetime_column' => '2021-07-01 10:30:00'
         //Not all columns are required in order to insert data...
 	]);
 
@@ -155,20 +155,20 @@ In order to insert multiple rows into a custom table you simply call the ```inse
 	$your_new_table->insert([
 		[
 			'int_column' => 30,
-	        'varchar_column' => 'Short Value',
-	        'boolean_column' => true,
-	        'text_column' => '',
-	        'longtext_column' => 'This is a considerable amount of text that will go into the database',
-	        'datetime_column' => '2021-07-01 10:30:00'
-        ],
-        [
-			'int_column' => 55,
-	        'varchar_column' => 'Some other value',
-	        'boolean_column' => false,
-	        'text_column' => 'This one has some text here',
-	        'longtext_column' => '',
-	        'datetime_column' => '2021-07-04 16:30:00'
-        ]
+      'varchar_column' => 'Short Value',
+      'boolean_column' => true,
+      'text_column' => '',
+      'longtext_column' => 'This is a considerable amount of text that will go into the database',
+      'datetime_column' => '2021-07-01 10:30:00'
+    ],
+    [
+	    'int_column' => 55,
+      'varchar_column' => 'Some other value',
+      'boolean_column' => false,
+      'text_column' => 'This one has some text here',
+      'longtext_column' => '',
+      'datetime_column' => '2021-07-04 16:30:00'
+    ]
 	]);
 
 ?>
@@ -475,13 +475,13 @@ public function columns(){
 	return [
 		'id' => 'bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT',
 		'int_column' => 'int(11) UNSIGNED NOT NULL DEFAULT 0',
-        'varchar_column' => 'varchar(15) NOT NULL',
-        'varchar_column_2' => 'varchar(30) NOT NULL DEFAULT "Default Stuff"',
-        'boolean_column' => 'boolean NOT NULL DEFAULT 0',
-        'text_column' => 'text NOT NULL',
-        'longtext_column' => 'longtext NOT NULL',
-        'datetime_column' => 'datetime NOT NULL DEFAULT "2000-01-01 12:00:00"',
-        'boolean_column_2' => 'boolean NOT NULL DEFAULT 1'
+    'varchar_column' => 'varchar(15) NOT NULL',
+    'varchar_column_2' => 'varchar(30) NOT NULL DEFAULT "Default Stuff"',
+    'boolean_column' => 'boolean NOT NULL DEFAULT 0',
+    'text_column' => 'text NOT NULL',
+    'longtext_column' => 'longtext NOT NULL',
+    'datetime_column' => 'datetime NOT NULL DEFAULT "2000-01-01 12:00:00"',
+    'boolean_column_2' => 'boolean NOT NULL DEFAULT 1'
 	]
 }
 
@@ -491,12 +491,12 @@ public function columns(){
 	return [
 		'id' => 'bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT',
 		'int_column' => 'int(11) UNSIGNED NOT NULL DEFAULT 0',
-        'varchar_column' => 'varchar(25) NOT NULL',
-        'varchar_column_2' => 'varchar(30) NOT NULL DEFAULT "Default Stuff"',
-        'boolean_column' => 'boolean NOT NULL DEFAULT 1',
-        'text_column' => 'text NOT NULL',
-        'longtext_column' => 'longtext NOT NULL',
-        'datetime_column' => 'datetime NOT NULL DEFAULT "2000-01-01 12:00:00"'
+    'varchar_column' => 'varchar(25) NOT NULL',
+    'varchar_column_2' => 'varchar(30) NOT NULL DEFAULT "Default Stuff"',
+    'boolean_column' => 'boolean NOT NULL DEFAULT 1',
+    'text_column' => 'text NOT NULL',
+    'longtext_column' => 'longtext NOT NULL',
+    'datetime_column' => 'datetime NOT NULL DEFAULT "2000-01-01 12:00:00"'
 	]
 }
 ```
