@@ -13,7 +13,7 @@
 
         //Initialize the table
         public function __construct(){
-            $this->table_structure($this->name());
+            $this->table_structure();
         }
 
         //Return name of main table
@@ -29,7 +29,7 @@
         abstract function version();
 
         //Returns the full name with the proper prefix
-        private function table_name(){
+        public function table_name(){
             global $wpdb;
             $name = $this->name();
             if(strpos($name, $wpdb->prefix) === 0){
@@ -308,7 +308,7 @@
         }
 
         //Adds the ORDER text to the SQL query for selecting
-        private function add_order_to_sql($sql, $order){
+        public function add_order_to_sql($sql, $order){
             if(isset($order['orderby'])){
                 $direction = 'ASC';
                 if(isset($order['order'])){
