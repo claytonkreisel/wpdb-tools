@@ -8,6 +8,7 @@
     namespace WPDBTools\CustomTable;
 
     use WPDBTools\CustomTable\Table;
+    use WPDBTools\Helpers;
 
     abstract class TableMeta extends Table {
 
@@ -81,7 +82,7 @@
                         $meta = $data['_meta'];
                         unset($data['_meta']);
                     }
-                    if($wpdb->insert($table_name, $data)){
+                    if($wpdb->insert($table_name, Helpers::prepare_value_storage_depth($data))){
                         if($meta){
                             $main_table_id = $wpdb->insert_id;
                             $metas = array();
@@ -131,7 +132,7 @@
                         }
                     }
 
-                    $values[] =  $value;
+                    $values[] = Helpers::prepare_value_storage($value);
 
                     if(is_numeric($value)) {
                         if(isset($place_holders[$count])) {
@@ -214,7 +215,7 @@
                         }
                     }
 
-                    $values[] =  $value;
+                    $values[] = Helpers::prepare_value_storage($value);
 
                     if(is_numeric($value)) {
                         if(isset($place_holders[$count])) {
@@ -246,7 +247,184 @@
 
         }
 
-        //Deletion of a row in the main table
+        //Delete a Row from the main table and all meta associated
+        public function delete($data){
+            global $wpdb;
+            $table_name = esc_sql($this->table_name());
 
+            $deleted = $this->select($data);
+
+            $mdelete = array();
+            foreach($deleted as $delete){
+                $mdelete[] = [
+                    'key' => 'main_table_id',
+                    'value' => $delete['id'],
+                    'operator' => 'OR'
+                ];
+            }
+
+            if(!is_array($data)){
+                if($wpdb->query($wpdb->prepare('DELETE FROM ' . $table_name . ' WHERE ' . $data))){
+                    $this->delete_meta($mdelete);
+                    return true;
+                }
+            } else {
+                if(isset($data[0]) && is_array($data[0])){
+                    $sql = 'DELETE FROM ' . $table_name . ' WHERE ';
+                    $values = array();
+                    foreach($data as $set){
+                        $v = Helpers::prepare_value_storage($set['value']);
+                        $placeholder = Helpers::prepare_placeholder($v);
+                        $compare = '=';
+                        $operator = "AND";
+                        if(isset($set['operator'])){
+                            $operator = $set['operator'];
+                        }
+                        if(isset($set['compare'])){
+                            $compare = $set['compare'];
+
+                            if($compare == "%LIKE%"){
+                                $v = "%" . $v . "%";
+                                $compare = "LIKE";
+                            }
+
+                            if($compare == "%LIKE"){
+                                $v = "%" . $v;
+                                $compare = "LIKE";
+                            }
+
+                            if($compare == "LIKE%"){
+                                $v .= "%";
+                                $compare = "LIKE";
+                            }
+                        }
+                        $values[] = $v;
+                        $k = '`' . $set['key'] . '`';
+                        if(isset($set['is_numeric']) && $set['is_numeric']){
+                            $k = 'ABS(' . $k . ')';
+                        }
+                        $sql .= $k . ' ' . $compare . ' ' . $placeholder . ' ' . $operator . ' ';
+                    }
+                    $sql = rtrim($sql, ' AND ');
+                    $sql = rtrim($sql, ' OR ');
+                    if($wpdb->query($wpdb->remove_placeholder_escape($wpdb->prepare($sql, $values)))){
+                        $this->delete_meta($mdelete);
+                        return true;
+                    }
+                } else {
+                    if($wpdb->delete($table_name, $data)){
+                        $this->delete_meta($mdelete);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        //Delete all Rows in main and meta tables
+        public function delete_all(){
+            global $wpdb;
+            $table_name = esc_sql($this->table_name());
+            if($wpdb->query($wpdb->prepare('DELETE FROM ' . $table_name))){
+                if($this->delete_all_meta()){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        //Delete everything in the meta table
+        public function delete_all_meta(){
+            global $wpdb;
+            $meta_table_name = esc_sql($this->meta_table_name());
+            if($wpdb->query($wpdb->prepare('DELETE FROM ' . $meta_table_name))){
+                return true;
+            }
+            return false;
+        }
+
+        //Delete Meta Data
+        public function delete_meta($data){
+            global $wpdb;
+            $table_name = esc_sql($this->meta_table_name());
+            if(!is_array($data)){
+                if($wpdb->query($wpdb->prepare('DELETE FROM ' . $table_name . ' WHERE ' . $data))){
+                    return true;
+                }
+            } else {
+                if(isset($data[0]) && is_array($data[0])){
+                    $sql = 'DELETE FROM ' . $table_name . ' WHERE ';
+                    $values = array();
+                    foreach($data as $set){
+                        $v = Helpers::prepare_value_storage($set['value']);
+                        $placeholder = Helpers::prepare_placeholder($v);
+                        $compare = '=';
+                        $operator = "AND";
+                        if(isset($set['operator'])){
+                            $operator = $set['operator'];
+                        }
+                        if(isset($set['compare'])){
+                            $compare = $set['compare'];
+
+                            if($compare == "%LIKE%"){
+                                $v = "%" . $v . "%";
+                                $compare = "LIKE";
+                            }
+
+                            if($compare == "%LIKE"){
+                                $v = "%" . $v;
+                                $compare = "LIKE";
+                            }
+
+                            if($compare == "LIKE%"){
+                                $v .= "%";
+                                $compare = "LIKE";
+                            }
+                        }
+                        $values[] = $v;
+                        $k = '`' . $set['key'] . '`';
+                        if(isset($set['is_numeric']) && $set['is_numeric']){
+                            $k = 'ABS(' . $k . ')';
+                        }
+                        $sql .= $k . ' ' . $compare . ' ' . $placeholder . ' ' . $operator . ' ';
+                    }
+                    $sql = rtrim($sql, ' AND ');
+                    $sql = rtrim($sql, ' OR ');
+                    if($wpdb->query($wpdb->remove_placeholder_escape($wpdb->prepare($sql, $values)))){
+                        return true;
+                    }
+                } else {
+                    if($wpdb->delete($table_name, $data)){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        //Update Meta Table
+        public function update_meta($id, $key, $value){
+            global $wpdb;
+            $table_name = esc_sql($this->meta_table_name());
+
+            $value_placeholder = Helpers::prepare_placeholder($value);
+            $key_placeholder = Helpers::prepare_placeholder($key);
+
+            //$sql = 'UPDATE ' . $table_name . ' SET `meta_value` = ' . $value_placeholder . ' WHERE `main_table_id` = %d AND `meta_key` = ' . $key_placeholder;
+
+            // die($sql);
+            //
+            // if($wpdb->query($wpdb->remove_placeholder_escape($wpdb->prepare($sql, array($value, $id, $key))))){
+            //     return true;
+            // }
+
+            $value = Helpers::prepare_value_storage($value);
+
+            if($wpdb->update($table_name, ['meta_value' => $value], ['main_table_id' => $id, 'meta_key' => $key])){
+                return true;
+            }
+
+            return false;
+        }
 
     }
