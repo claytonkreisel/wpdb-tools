@@ -12,10 +12,11 @@
             public static function prepare_placeholder($value){
                 $placeholder = '"%s"';
                 if(is_numeric($value)){
-                    if(is_float($value)){
+                    $placeholder = '%d';
+                    if(strpos($value, '.') != false){
+                        $value = floatval($value);
                         $placeholder = '%f';
                     }
-                    $placeholder = '%d';
                 }
                 return $placeholder;
             }
