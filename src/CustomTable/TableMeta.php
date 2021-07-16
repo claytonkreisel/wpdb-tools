@@ -134,18 +134,10 @@
 
                     $values[] = Helpers::prepare_value_storage($value);
 
-                    if(is_numeric($value)) {
-                        if(isset($place_holders[$count])) {
-                            $place_holders[$count] .= ", '%d'";
-                        } else {
-                            $place_holders[$count] .= "( '%d'";
-                        }
+                    if(isset($place_holders[$count])) {
+                        $place_holders[$count] .= ", " . Helpers::prepare_placeholder($value);
                     } else {
-                        if(isset($place_holders[$count])) {
-                            $place_holders[$count] .= ", '%s'";
-                        } else {
-                            $place_holders[$count] .= "( '%s'";
-                        }
+                        $place_holders[$count] .= "( " . Helpers::prepare_placeholder($value);
                     }
                 }
                 // mind closing the GAP
