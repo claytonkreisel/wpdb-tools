@@ -149,7 +149,16 @@
                     $values = array();
                     foreach($data as $set){
                         $v = $set['value'];
-                        $placeholder = Helpers::prepare_placeholder($v);
+                        if(is_array($v)){
+                            $placeholder = "(";
+                            foreach($v as $vv){
+                                $placeholder .= Helpers::prepare_placeholder($vv) . ', ';
+                            }
+                            $placeholder = trim($placeholder, ", ");
+                            $placeholder .= ")";
+                        } else {
+                            $placeholder = Helpers::prepare_placeholder($v);    
+                        }
                         $compare = '=';
                         $operator = "AND";
                         if(isset($set['operator'])){
@@ -173,7 +182,13 @@
                                 $compare = "LIKE";
                             }
                         }
-                        $values[] = $v;
+                        if(is_array($v)){
+                            foreach($v as $vv){
+                                $values[] = $vv;
+                            }
+                        } else {
+                            $values[] = $v;
+                        }
                         $k = '`' . $set['key'] . '`';
                         if(isset($set['is_numeric']) && $set['is_numeric']){
                             $k = 'ABS(' . $k . ')';
@@ -250,7 +265,16 @@
             } else {
                 foreach($data as $set){
                     $v = $set['value'];
-                    $placeholder = Helpers::prepare_placeholder($v);
+                    if(is_array($v)){
+                        $placeholder = "(";
+                        foreach($v as $vv){
+                            $placeholder .= Helpers::prepare_placeholder($vv) . ', ';
+                        }
+                        $placeholder = trim($placeholder, ", ");
+                        $placeholder .= ")";
+                    } else {
+                        $placeholder = Helpers::prepare_placeholder($v);    
+                    }
                     $compare = '=';
                     if(isset($set['operator'])){
                         $operator = $set['operator'];
@@ -273,7 +297,13 @@
                             $compare = "LIKE";
                         }
                     }
-                    $values[] = $v;
+                    if(is_array($v)){
+                        foreach($v as $vv){
+                            $values[] = $vv;
+                        }
+                    } else {
+                        $values[] = $v;
+                    }
                     $k = '`' . $set['key'] . '`';
                     if(isset($set['is_numeric']) && $set['is_numeric']){
                         $k = 'ABS(' . $k . ')';
@@ -379,7 +409,16 @@
                 } else {
                     foreach($where as $set){
                         $v = $set['value'];
-                        $placeholder = Helpers::prepare_placeholder($v);
+                        if(is_array($v)){
+                        $placeholder = "(";
+                        foreach($v as $vv){
+                            $placeholder .= Helpers::prepare_placeholder($vv) . ', ';
+                        }
+                            $placeholder = trim($placeholder, ", ");
+                            $placeholder .= ")";
+                        } else {
+                            $placeholder = Helpers::prepare_placeholder($v);    
+                        }
                         $compare = '=';
                         $operator = 'AND';
                         if(isset($set['operator'])){
@@ -403,7 +442,13 @@
                                 $compare = "LIKE";
                             }
                         }
-                        $values[] = $v;
+                        if(is_array($v)){
+                            foreach($v as $vv){
+                                $values[] = $vv;
+                            }
+                        } else {
+                            $values[] = $v;
+                        }
                         $k = '`' . $set['key'] . '`';
                         if(isset($set['is_numeric']) && $set['is_numeric']){
                             $k = 'ABS(' . $k . ')';
