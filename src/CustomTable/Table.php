@@ -150,12 +150,16 @@
                     foreach($data as $set){
                         $v = $set['value'];
                         if(is_array($v)){
-                            $placeholder = "(";
-                            foreach($v as $vv){
-                                $placeholder .= Helpers::prepare_placeholder($vv) . ', ';
+                            if(isset($set['compare']) && $set['compare'] == "BETWEEN" && isset($v[0]) && isset($v[1])){
+                                $placeholder = Helpers::prepare_placeholder($v[0]) . " AND " . Helpers::prepare_placeholder($v[1]);
+                            } else {
+                                $placeholder = "(";
+                                foreach($v as $vv){
+                                    $placeholder .= Helpers::prepare_placeholder($vv) . ', ';
+                                }
+                                $placeholder = trim($placeholder, ", ");
+                                $placeholder .= ")";
                             }
-                            $placeholder = trim($placeholder, ", ");
-                            $placeholder .= ")";
                         } else {
                             $placeholder = Helpers::prepare_placeholder($v);    
                         }
@@ -266,12 +270,16 @@
                 foreach($data as $set){
                     $v = $set['value'];
                     if(is_array($v)){
-                        $placeholder = "(";
-                        foreach($v as $vv){
-                            $placeholder .= Helpers::prepare_placeholder($vv) . ', ';
+                        if(isset($set['compare']) && $set['compare'] == "BETWEEN" && isset($v[0]) && isset($v[1])){
+                            $placeholder = Helpers::prepare_placeholder($v[0]) . " AND " . Helpers::prepare_placeholder($v[1]);
+                        } else {
+                            $placeholder = "(";
+                            foreach($v as $vv){
+                                $placeholder .= Helpers::prepare_placeholder($vv) . ', ';
+                            }
+                            $placeholder = trim($placeholder, ", ");
+                            $placeholder .= ")";
                         }
-                        $placeholder = trim($placeholder, ", ");
-                        $placeholder .= ")";
                     } else {
                         $placeholder = Helpers::prepare_placeholder($v);    
                     }
@@ -410,12 +418,16 @@
                     foreach($where as $set){
                         $v = $set['value'];
                         if(is_array($v)){
-                        $placeholder = "(";
-                        foreach($v as $vv){
-                            $placeholder .= Helpers::prepare_placeholder($vv) . ', ';
-                        }
-                            $placeholder = trim($placeholder, ", ");
-                            $placeholder .= ")";
+                            if(isset($set['compare']) && $set['compare'] == "BETWEEN" && isset($v[0]) && isset($v[1])){
+                                $placeholder = Helpers::prepare_placeholder($v[0]) . " AND " . Helpers::prepare_placeholder($v[1]);
+                            } else {
+                                $placeholder = "(";
+                                foreach($v as $vv){
+                                    $placeholder .= Helpers::prepare_placeholder($vv) . ', ';
+                                }
+                                $placeholder = trim($placeholder, ", ");
+                                $placeholder .= ")";
+                            }
                         } else {
                             $placeholder = Helpers::prepare_placeholder($v);    
                         }
