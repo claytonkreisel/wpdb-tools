@@ -230,7 +230,7 @@ $your_new_table->select_or([
 Provide an array of arrays that will build the WHERE clause of your query
 @params key(required) - The column name
 @params value(required) - The value you are comparing against
-@params compare(optional) - The comparison operator (=,!=,<,>,<=,>=,LIKE,%LIKE%,%LIKE,LIKE%). Defaults to "=".
+@params compare(optional) - The comparison operator (=, !=, <, >, <=, >=, LIKE, %LIKE%, %LIKE, LIKE%, BETWEEN, NOT BETWEEN, IN, NOT IN). Defaults to "=".
 @params operator(optional) - The operator (AND or OR) that will connect this rule to the following rule. Only applies if there is another array in the set. Defaults to "AND".
 */
 $your_new_table->select([
@@ -253,6 +253,16 @@ $your_new_table->select([
     "key" => "text_column",
     "value" => "another text",
     "compare" => "LIKE%"
+  ],
+  [
+    "key" => "int_column",
+    "value" => [1,10],
+    "compare" => "BETWEEN"
+  ],
+  [
+    "key" => "varchar_column",
+    "value" => ['text', 3, 'some other text'],
+    "compare" => "IN"
   ]
 ]);
 //Output -> SELECT * FROM your_new_table WHERE `boolean_column` = 1 AND `datetime_column` < "2020-01-01 12:00:00" OR `longtext_column` LIKE "%some text%" AND `text_column` LIKE "another text%";
@@ -325,7 +335,7 @@ The following examples show different ways to use this method:
   Provide an array of arrays that will build the WHERE clause of your query
   @params key(required) - The column name
   @params value(required) - The value you are comparing against
-  @params compare(optional) - The comparison operator (=,!=,<,>,<=,>=,LIKE,%LIKE%,%LIKE,LIKE%). Defaults to "=".
+  @params compare(optional) - The comparison operator (=, !=, <, >, <=, >=, LIKE, %LIKE%, %LIKE, LIKE%, BETWEEN, NOT BETWEEN, IN, NOT IN). Defaults to "=".
   @params operator(optional) - The operator (AND or OR) that will connect this rule to the following rule. Only applies if there is another array in the set. Defaults to "AND".
   */
   $your_new_table->delete([
@@ -343,6 +353,16 @@ The following examples show different ways to use this method:
       'key' => 'longtext_column',
       'value' => 'look for this',
       'compare' => '%LIKE%'
+    ],
+    [
+      "key" => "int_column",
+      "value" => [1,10],
+      "compare" => "BETWEEN"
+    ],
+    [
+      "key" => "varchar_column",
+      "value" => ['text', 3, 'some other text'],
+      "compare" => "NOT IN"
     ]
   ]);
   //Output -> DELETE FROM your_new_table WHERE `boolean_column` = 1 AND `varchar_column` != "Some text" OR `longtext_column` LIKE "%look for this%";
@@ -404,6 +424,13 @@ The following examples show different ways to use this method:
 
 
   /* Build a more complex WHERE clause for the update that includes custom operators and comparisons */
+   /*
+  Provide an array of arrays that will build the WHERE clause of your query
+  @params key(required) - The column name
+  @params value(required) - The value you are comparing against
+  @params compare(optional) - The comparison operator (=, !=, <, >, <=, >=, LIKE, %LIKE%, %LIKE, LIKE%, BETWEEN, NOT BETWEEN, IN, NOT IN). Defaults to "=".
+  @params operator(optional) - The operator (AND or OR) that will connect this rule to the following rule. Only applies if there is another array in the set. Defaults to "AND".
+  */
   $your_new_table->update(
     [
       'longtext_column' => 'This is a line of new text to go into the cell',
@@ -424,6 +451,16 @@ The following examples show different ways to use this method:
         'key' => 'longtext_column',
         'value' => 'look for this',
         'compare' => '%LIKE%'
+      ],
+      [
+        "key" => "int_column",
+        "value" => [1,10],
+        "compare" => "NOT BETWEEN"
+      ],
+      [
+        "key" => "varchar_column",
+        "value" => ['text', 3, 'some other text'],
+        "compare" => "IN"
       ]
     ]
   );
