@@ -236,7 +236,12 @@
                 if($order){
                     $sql = $this->add_order_to_sql($sql, $order);
                 }
-                return $wpdb->get_results($sql, $return_type);
+                $results = $wpdb->get_results($sql, $return_type);
+                foreach ($results as $rkey => $rval) {
+                    $results[$rkey]['value'] = maybe_unserialize($rval['value']);
+                }
+
+                return $results;
             }
             return false;
         }
@@ -324,7 +329,11 @@
             if($order){
                 $sql = $this->add_order_to_sql($sql, $order);
             }
-            return $wpdb->get_results($wpdb->remove_placeholder_escape($wpdb->prepare($sql, $values)), $return_type);
+            $results = $wpdb->get_results($wpdb->remove_placeholder_escape($wpdb->prepare($sql, $values)), $return_type);
+            foreach($results as $rkey => $rval){
+                $results[$rkey]['value'] = maybe_unserialize($rval['value']);
+            }
+            return $results;
         }
 
         //Get all rows
@@ -335,7 +344,11 @@
             if($order){
                 $sql = $this->add_order_to_sql($sql, $order);
             }
-            return $wpdb->get_results($sql, $return_type);
+            $results = $wpdb->get_results($sql, $return_type);
+            foreach ($results as $rkey => $rval) {
+                $results[$rkey]['value'] = maybe_unserialize($rval['value']);
+            }
+            return $results;
         }
 
         //Adds the ORDER text to the SQL query for selecting
