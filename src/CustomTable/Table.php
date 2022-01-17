@@ -114,7 +114,7 @@
                     if(isset($place_holders[$count])) {
                         $place_holders[$count] .= ", " . Helpers::prepare_placeholder($value);
                     } else {
-                        $place_holders[$count] .= "( " . Helpers::prepare_placeholder($value);
+                        $place_holders[$count] = "( " . Helpers::prepare_placeholder($value);
                     }
 
                 }
