@@ -238,7 +238,7 @@
                 }
                 $results = $wpdb->get_results($sql, $return_type);
                 foreach ($results as $rkey => $rval) {
-                    $results[$rkey]['value'] = maybe_unserialize($rval['value']);
+                    $results[$rkey]['value'] = maybe_unserialize($rval);
                 }
 
                 return $results;
@@ -331,7 +331,7 @@
             }
             $results = $wpdb->get_results($wpdb->remove_placeholder_escape($wpdb->prepare($sql, $values)), $return_type);
             foreach($results as $rkey => $rval){
-                $results[$rkey]['value'] = maybe_unserialize($rval['value']);
+                $results[$rkey]['value'] = maybe_unserialize($rval);
             }
             return $results;
         }
@@ -346,7 +346,7 @@
             }
             $results = $wpdb->get_results($sql, $return_type);
             foreach ($results as $rkey => $rval) {
-                $results[$rkey]['value'] = maybe_unserialize($rval['value']);
+                $results[$rkey]['value'] = maybe_unserialize($rval);
             }
             return $results;
         }
